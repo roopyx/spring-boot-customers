@@ -5,6 +5,7 @@ import com.lavv.spring.customers.repository.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -21,17 +22,22 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     public List<Customer> getAllCustomers() {
-        return null;
+        List<Customer> customers = new ArrayList<>();
+        customerRepository.findAll().forEach(customers::add);
+        return customers;
     }
 
     public void removeCustomer(Integer id) {
+        customerRepository.deleteById(id);
     }
 
     public void addCustomer(Customer customer) {
+        customerRepository.save(customer);
     }
 
     public void updateCustomer(Integer id, Customer updateCustomer) {
-
+        updateCustomer.setId(id);
+        customerRepository.save(updateCustomer);
     }
 
     public List<Customer> searchCustomer(String email, String address) {
