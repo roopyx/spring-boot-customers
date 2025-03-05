@@ -41,6 +41,6 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     public List<Customer> searchCustomer(String email, String address) {
-      return null;
+      return customerRepository.findByEmailOrAddress(email, address);
     }
 }
