@@ -17,8 +17,7 @@ public class CustomerServiceImpl implements CustomerService {
 
     public Customer getCustomer(Integer id) {
         Optional<Customer> customer = customerRepository.findById(id);
-        if (customer.isPresent()) return customer.get();
-        return null;
+        return customer.orElse(null);
     }
 
     public List<Customer> getAllCustomers() {

@@ -15,34 +15,32 @@ public class CustomerController {
     @Autowired
     private CustomerService service;
 
-    @GetMapping("/customer/{id}") // Traer un cliente especifico
+    @GetMapping("/customer/{id}")
     public Customer getCustomer(@PathVariable Integer id) {
         return service.getCustomer(id);
     }
 
-    @GetMapping("/customer") // Traer todos los clientes
+    @GetMapping("/customer")
     public List<Customer> getAllCustomers() {
         return service.getAllCustomers();
     }
 
-    @DeleteMapping("/customer/{id}") // Eliminar un cliente
+    @DeleteMapping("/customer/{id}")
     public void removeCustomer(@PathVariable Integer id) {
         service.removeCustomer(id);
     }
 
-    @PostMapping("/customer") // Agregar cliente
+    @PostMapping("/customer")
     public void addCustomer(@RequestBody Customer customer) {
         service.addCustomer(customer);
     }
 
-    @PutMapping("/customer/{id}") // Modificar cliente
-    public void updateCustomer(@PathVariable Integer id,
-                               @RequestBody Customer updateCustomer) {
+    @PutMapping("/customer/{id}")
+    public void updateCustomer(@PathVariable Integer id, @RequestBody Customer updateCustomer) {
         service.updateCustomer(id, updateCustomer);
     }
 
-
-    @GetMapping("/customer/search") // Busqueda
+    @GetMapping("/customer/search")
     public List<Customer> searchCustomer(@RequestParam(name = "email", required = false) String email,
                                          @RequestParam(name = "address", required = false) String address) {
         return service.searchCustomer(email, address);
