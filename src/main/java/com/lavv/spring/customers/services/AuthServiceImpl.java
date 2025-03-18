@@ -13,14 +13,13 @@ import java.util.List;
 @Service
 public class AuthServiceImpl implements AuthService{
 
-    @Value('${jwtKey}')
-    private static final String SECRET_KEY;
+    @Value("${customers.app.env}")
+    private String SECRET_KEY;
 
     @Autowired
     private UserRepository userRepository;
 
     public User login(String email, String password) {
-
         String hashPassword = Hashing.sha256().hashString(password + SECRET_KEY, StandardCharsets.UTF_8).toString();
 
         List<User> result = userRepository.findByEmailOrPassword(email, hashPassword);

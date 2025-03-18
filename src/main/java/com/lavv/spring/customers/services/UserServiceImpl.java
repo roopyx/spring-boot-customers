@@ -4,6 +4,7 @@ import com.google.common.hash.Hashing;
 import com.lavv.spring.customers.entities.User;
 import com.lavv.spring.customers.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.nio.charset.StandardCharsets;
@@ -17,8 +18,12 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private UserRepository userRepository;
 
-    @Value('${jwtKey}')
-    private static final String SECRET_KEY;
+    private static String SECRET_KEY;
+
+    @Value("${customers.app.env}")
+    public void setSecretKey(String secretKey) {
+        SECRET_KEY = secretKey;
+    }
 
     public User getUser(Integer id) {
         Optional<User> user = userRepository.findById(id);
@@ -36,7 +41,7 @@ public class UserServiceImpl implements UserService {
     }
 
     public void addUser(User user) {
-        String hashPassword = Hashing.sha256().hashString(user.getPassword() + SECRET_KEY, StandardCharsets.UTF_8).toString();
+        String hashPassword = Hashing.sha256().hashString(user.getPassword() + UserServiceImpl.SECRET_KEY, StandardCharsets.UTF_8).toString();
         user.setPassword(hashPassword);
         userRepository.save(user);
     }
